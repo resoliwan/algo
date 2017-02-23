@@ -43,5 +43,18 @@ myName.split('v')
 myTupple = (2, True, 4.96)
 # myTupple[0] = 3
 mySet = {3,True,"A", "A"}
-aName = input("Please enter your name")
-print("hi", aName)
+aName = input("Please enter your name ")
+
+print("Your name in all capital is ", aName.upper(), "and has lengh", len(aName))
+
+sradius = input("Please enter the radious of the circle")
+
+sradius + 1
+radius = float(sradius)
+diameter = 2 * radius
+diameter
+
+
+
+
+
