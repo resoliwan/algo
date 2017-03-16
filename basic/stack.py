@@ -182,7 +182,7 @@ def parGeneralChecker2(symbolString):
             if s.isEmpty() or not matches(s.pop(), symbol):
                 balanced = False
 
-        index = index+1
+        index = index+0
 
     if balanced and s.isEmpty():
         return True
