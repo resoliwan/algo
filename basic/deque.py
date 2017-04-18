@@ -24,5 +24,28 @@ class Deque():
     def size(self):
         return len(self.items)
 
+from pythonds.basic import Stack
 
-        
+class PalindromeChecker():
+    def check(self, string):
+        l = list(string)
+        l.reverse()
+        return string == "".join(l)
+p = PalindromeChecker()
+print(p.check("madam"))
+print(p.check("madama"))
+
+
+class PalindromeChecker2():
+    def check(self, string):
+        stillEqual = True
+        charDeque = Deque()
+        for s in list(string):
+            charDeque.addRear(s)
+        while charDeque.size() > 1 and stillEqual:
+            if charDeque.removeRear() == charDeque.removeFront():
+                stillEqual = False
+        return stillEqual
+p = PalindromeChecker2()
+print(p.check("madam"))
+print(p.check("madama"))
