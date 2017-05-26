@@ -2,6 +2,7 @@ import turtle
 import importlib
 
 OBSTATCLE = '+'
+
 class Maze:
     def __init__(self, mazeFileName):
         importlib.reload(turtle)
@@ -22,16 +23,16 @@ class Maze:
         self.t.shape('turtle')
         self.wn = turtle.Screen()
         self.xTranslate = 0
-        self.yTranslate = self.rowSize 
+        self.yTranslate = self.rowSize - 1
         self.wn.setworldcoordinates(0, 0, +self.colSize, +self.rowSize)
 
     def drawMaze(self):
-        # self.wn.tracer(0)
+        self.wn.tracer(1)
         for y in range(self.rowSize):
             for x in range(self.colSize):
-                print('x: {}, y: {}, val: {}'.format(x, y, self.map[y]))
+                print('x: {}, y: {}, val: {}'.format(x, self.yTranslate-y, self.map[y]))
                 if self.map[y][x] == OBSTATCLE:
-                    self.drawCenteredBox(x, y, 'orange')
+                    self.drawCenteredBox(x, self.yTranslate - y, 'orange')
 
     def drawCenteredBox(self, x, y, color):
         self.t.up()
@@ -46,7 +47,6 @@ class Maze:
             self.t.right(90)
 
         self.t.end_fill()
-
 
 
 m = Maze('./recursion/maze.map')
