@@ -27,12 +27,29 @@ class Maze:
         self.wn.setworldcoordinates(0, 0, +self.colSize, +self.rowSize)
 
     def drawMaze(self):
-        self.wn.tracer(1)
+        self.wn.tracer(0)
         for y in range(self.rowSize):
             for x in range(self.colSize):
-                print('x: {}, y: {}, val: {}'.format(x, self.yTranslate-y, self.map[y]))
+                x, y = self.translate(x, y)
+                print('x: {}, y: {}, val: {}'.format(x, y, self.map[y]))
                 if self.map[y][x] == OBSTATCLE:
-                    self.drawCenteredBox(x, self.yTranslate - y, 'orange')
+                    self.drawCenteredBox(x, y, 'orange')
+        self.t.color('black')
+        self.t.fillcolor('black')
+        self.wn.update()
+        self.wn.tracer(1)
+
+    def translate(self, x, y):
+        return (x, self.yTranslate - y)
+
+    def moveTurtle(self, x, y):
+        x, y = self.translate(x, y)
+        self.t.up()
+        self.t.ssetheading(self.t.towards(x, y))
+        self.t.goto(x, y)
+
+    def dropBreadCrumb(self, color):
+        self.t.dot(10, color)
 
     def drawCenteredBox(self, x, y, color):
         self.t.up()
