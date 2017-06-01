@@ -1,7 +1,10 @@
 import turtle
 import importlib
 
-OBSTATCLE = '+'
+OBSTACLE = '+'
+TRIED = '.'
+PART_OF_PATH = '0'
+DEAD_END = '-'
 
 class Maze:
     def __init__(self, mazeFileName):
@@ -17,7 +20,7 @@ class Maze:
                 self.colSize = len(row)
                 if col == 'S':
                     self.startRow = rowIdx
-                    self.startCol = colIdx
+                    self.startColumn = colIdx
             self.map.append(list(row))
         self.t = turtle.Turtle()
         self.t.shape('turtle')
@@ -31,8 +34,8 @@ class Maze:
         for y in range(self.rowSize):
             for x in range(self.colSize):
                 x, y = self.translate(x, y)
-                print('x: {}, y: {}, val: {}'.format(x, y, self.map[y]))
-                if self.map[y][x] == OBSTATCLE:
+                # print('x: {}, y: {}, val: {}'.format(x, y, self.map[y]))
+                if self.map[y][x] == OBSTACLE:
                     self.drawCenteredBox(x, y, 'orange')
         self.t.color('black')
         self.t.fillcolor('black')
@@ -45,7 +48,7 @@ class Maze:
     def moveTurtle(self, x, y):
         x, y = self.translate(x, y)
         self.t.up()
-        self.t.ssetheading(self.t.towards(x, y))
+        self.t.setheading(self.t.towards(x, y))
         self.t.goto(x, y)
 
     def dropBreadCrumb(self, color):
@@ -64,7 +67,58 @@ class Maze:
             self.t.right(90)
 
         self.t.end_fill()
+    
+    def updatePosition(self, row, col, val=None):
+        if val:
+            self.map[row][col] = val
+        self.moveTurtle(col, row)
+
+        if val == PART_OF_PATH:
+            color = 'green'
+        elif val == OBSTACLE:
+            color = 'red'
+        elif val == TRIED:
+            color = 'black'
+        elif val == DEAD_END:
+            color = 'red'       
+        else:
+            color = None
+
+        if color:
+            self.dropBreadCrumb(color)
+    
+    def isExit(self, row, col):
+        return (row == 0 or row == self.rowSize - 1 or
+                col == 0 or col == self.colSize - 1)
+
+
+def searchForm(maze, startRow, startColumn):
+    maze.updatePosition(startRow, startColumn)
+    if maze.map[startRow][startColumn] == OBSTACLE:
+        return False
+
+    if maze.map[startRow][startColumn] == TRIED or maze.map[startRow][startColumn] == DEAD_END:
+        return False
+
+    if maze.isExit(startRow, startColumn):
+        maze.updatePosition(startRow, startColumn, PART_OF_PATH)
+        return True
+
+    maze.updatePosition(startRow, startColumn, TRIED)
+
+    found = searchForm(maze, startRow-1, startColumn) or \
+            searchForm(maze, startRow+1, startColumn) or \
+            searchForm(maze, startRow, startColumn-1) or \
+            searchForm(maze, startRow, startColumn+1)
+
+    if found:
+        maze.updatePosition(startRow, startColumn, PART_OF_PATH)
+    else:
+        maze.updatePosition(startRow, startColumn, DEAD_END)
+
+    return found
 
 
 m = Maze('./recursion/maze.map')
 m.drawMaze()
+searchForm(m, m.startRow, m.startColumn)
