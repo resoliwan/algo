@@ -21,6 +21,7 @@ class HashTable:
                 self.data[hashValue] = value #replace
             else:
                 nextSlot = self.reHash(hashValue)
+                #assumes that there will eventually be an empty slot unless the key is already present in the self.slots.
                 while self.slots[nextSlot] != None and key != self.slots[nextSlot]:
                     nextSlot = self.reHash(nextSlot)
 
