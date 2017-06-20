@@ -30,9 +30,9 @@ def shortBubbleSort(alist):
         for i in range(passnum):
             if alist[i] > alist[i + 1]:
                 alist[i], alist[i + 1] = alist[i + 1], alist[i]
-                exchages = True
+                exchanges = True
         passnum -= 1
-
     return alist
+        
 
 print(shortBubbleSort([8, 4, 2]))
