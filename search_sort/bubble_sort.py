@@ -31,7 +31,7 @@ def shortBubbleSort(alist):
             if alist[i] > alist[i + 1]:
                 alist[i], alist[i + 1] = alist[i + 1], alist[i]
                 exchanges = True
-        passnum -= 1
+            passnum -= 1
     return alist
         
 
