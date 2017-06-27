@@ -7,4 +7,19 @@ def insertionSort1(alist):
     return alist
 
 
-print(insertionSort1([8, 4, 2, 5]))
+# print(insertionSort1([8, 4, 2, 5]))
+
+def insertionSort2(alist):
+    for next in range(1, len(alist)):
+        newItem = alist[next]
+        i = next
+        # print('next: {}, i: {}, newItem: {}'.format(next, i, newItem))
+        while i > 0 and newItem < alist[i - 1]:
+            alist[i] = alist[i - 1]
+            i -= 1
+
+        alist[i] = newItem
+
+    return alist
+
+print(insertionSort2([8, 4, 2, 5]))
