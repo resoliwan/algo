@@ -2,8 +2,11 @@ def mergeSort(alist):
     if len(alist) <= 1:
         return alist
     mid = len(alist) // 2
-    leftHalf = mergeSort(alist[:mid])
-    rightHalf = mergeSort(alist[mid:])
+    leftHalf = alist[:mid]
+    rightHalf = alist[mid:]
+
+    mergeSort(leftHalf)
+    mergeSort(rightHalf)
     
     i = 0   
     j = 0
