@@ -1,35 +1,79 @@
 def startQuickSort(alist):
-    if len(alist) < 1:
-        return alist
-    quickSort(alist, 0, 1, len(alist) - 1)
-    return alist
+   sortHelper(alist, 0, 1, len(alist) - 1)
+   return alist
+
+def sortHelper(alist, p, l, r):
+    if (r - p) < 2:
+        return 
+    split = sort(alist, p, l, r)
+    sortHelper(alist, p, p + 1, split - 1)
+    sortHelper(alist, split + 1, split + 2, r)
+
+def sort(alist, p, l, r):
+    # print('p: {}, l: {}, r: {}, alist: {}'.format(p, l, r, alist))
+    done = False
+    while not done:
+        while alist[l] < alist[p] and l < r:
+            l += 1
+        while alist[r] > alist[p] and r >= l:
+            r -= 1
+        # print('  while l , r increasem p: {}, l: {}, r: {}, alist: {}'.format(p, l, r, alist))
+        if l < r:
+            alist[l], alist[r] = alist[r], alist[l]
+        else:
+            done = True
+
+    # print('  before change pivot p: {}, l: {}, r: {}, alist: {}'.format(p, l, r, alist))
+    alist[p], alist[r] = alist[r], alist[p]
+    return r
+    # print('  end p: {}, l: {}, r: {}, alist: {}'.format(p, l, r, alist))
 
 
-def quickSort(alist, p, l, r):
-    pivot = p
-    leftmark = l
-    rightmark = r
-    print('pivot: {}, leftmark: {}, rightmark: {}'.format(pivot, leftmark, rightmark))
-    if leftmark == pivot:
-        return
-    if leftmark >= rightmark:
-        if alist[leftmark] > alist[rightmark]:
-            alist[leftmark], alist[rightmark] = alist[rightmark], alist[leftmark]
-        return
 
-    while leftmark < rightmark:
-        print(leftmark, rightmark)
-        while alist[pivot] > alist[leftmark] and leftmark < rightmark:
-            leftmark += 1
-        while alist[pivot] < alist[rightmark] and  leftmark < rightmark:
-            rightmark -= 1 
-        print(leftmark, rightmark)
-        alist[leftmark], alist[rightmark] = alist[rightmark], alist[leftmark]
-    print(alist)
-    print('after pivot: {}, leftmark: {}, rightmark: {}'.format(pivot, leftmark, rightmark))
-    alist[pivot], alist[rightmark] = alist[rightmark], alist[pivot]
-    print(alist)
-    quickSort(alist, p, (p + 1), (rightmark - 1))
-    quickSort(alist, (rightmark + 1), (rightmark + 2), r)
 
-print(startQuickSort([8, 4, 5, 9, 10]))
+print(startQuickSort([5, 1, 9, 8, 3, 4, 7]))
+
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+
+       splitpoint = partition(alist,first,last)
+
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+
+
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+
+   leftmark = first+1
+   rightmark = last
+
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+
+
+   return rightmark
+
+alist = [54,26,93,17,77,31,44,55,20]
+quickSort(alist)
+print(alist)
