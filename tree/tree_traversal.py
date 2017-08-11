@@ -23,15 +23,8 @@ def preorder(tree):
         preorder(tree.getLeftChild())
         preorder(tree.getRightChild())
 
-# preorder(t)
-
-def postorder(tree):
-    if tree:
-        postorder(tree.getLeftChild())
-        postorder(tree.getRightChild())
-        print(tree.getRootVal())
-
-# postorder(t)
+print('preorder')
+preorder(t)
 
 def inorder(tree):
     if tree:
@@ -39,4 +32,14 @@ def inorder(tree):
         print(tree.getRootVal())
         inorder(tree.getRightChild())
 
+print('inorder')
 inorder(t)
+
+def postorder(tree):
+    if tree:
+        postorder(tree.getLeftChild())
+        postorder(tree.getRightChild())
+        print(tree.getRootVal())
+
+print('postorder')
+postorder(t)

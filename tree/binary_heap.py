@@ -10,9 +10,31 @@ class BinaryHeap():
 
     def percolateUp(self, i):
         while i // 2 > 0:
-            if self.heapList[i] > self.heapList[i // 2] :
+            if self.heapList[i] < self.heapList[i // 2] :
                 self.heapList[i], self.heapList[i // 2] = self.heapList[i // 2],  self.heapList[i]
             i = i // 2
+
+    def getMin(self):
+        minEle = self.heapList[1]
+        self.heapList[1] = self.heapList[self.currentSize]
+        self.currentSize -= 1
+        self.heapList.pop()
+        self.percolateDown(1)
+
+    def percolateDown(self, i):
+        while (i * 2) + 1 < self.currentSize:
+            mc = self.minChild(i)
+            self.heapList[i], self.heapList[mc] = self.heapList[mc], self.heapList[i]
+            i = mc
+
+    def minChild(self, i):
+        if i * 2 + 1 > self.currentSize:
+            return i * 2
+        else:
+            if self.heapList[i * 2] < self.heapList[(i * 2) + 1]:
+                return i * 2
+            else: 
+                return (i * 2) + 1
 
     def __str__(self):
         print(self.heapList)
@@ -24,9 +46,17 @@ b.insert(1)
 b.insert(9)
 b.insert(3)
 b.insert(10)
+b.insert(7)
+b.insert(4)
 
 print(b)
 
+print(b.getMin())
+print(b)
+print(b.getMin())
+print(b)
+print(b.getMin())
+print(b)
 
         
 
